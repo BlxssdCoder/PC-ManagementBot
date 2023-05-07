@@ -16,8 +16,12 @@ down = types.KeyboardButton(text='⬇️')
 left = types.KeyboardButton(text='⬅️')
 right = types.KeyboardButton(text='➡️')
 click = types.KeyboardButton(text='Click')
+write = types.KeyboardButton(text='Клавиатура')
+keyboard_shortcut = types.KeyboardButton(
+    text='Сочитание клавиш')
 exit = types.KeyboardButton(text='Выйти из режима')
-action_mouse_kb.add(up, down, left, right, click, exit)
+action_mouse_kb.add(up, down, left, right, click,
+                    write, keyboard_shortcut, exit)
 
 process_files = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
 kill = types.KeyboardButton('Завершить процесс')

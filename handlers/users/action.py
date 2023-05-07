@@ -1,10 +1,9 @@
 import os
-import platform
 import subprocess
 
 import mouse
-import requests
 from aiogram import types
+import keyboard
 from aiogram.dispatcher import FSMContext
 
 from keyboards.default import (action_mouse_kb, go_to_back,
@@ -71,10 +70,52 @@ async def cmd_action_mouse(message: types.Message, state: FSMContext):
                                        reply_markup=action_mouse_kb)
             os.remove("screen.png")
             os.remove("screen_with_mouse.png")
+        elif message.text == 'Клавиатура':
+            await message.answer('Ожидаю ввод:')
+            await MouseState.keyboard.set()
+        elif message.text == 'Сочитание клавиш':
+            await message.answer('Введите сочитание клавиш, например:\n\n'
+                                 'ctrl+s | backspase | tab | alt+tab',
+                                 reply_markup=action_mouse_kb)
+            await MouseState.shortcut.set()
         elif message.text == 'Выйти из режима':
             await state.finish()
             await message.answer('Вы вышли из управления компьютера',
                                  reply_markup=kb)
+
+
+@dp.message_handler(state=MouseState.keyboard, content_types=['text'])
+async def cmd_action_keyboard(message: types.Message, state: FSMContext):
+    async with state.proxy() as data:
+        if message.text == 'Выйти из режима':
+            await message.answer('Вы перешли в управление мышью',
+                                 reply_markup=action_mouse_kb)
+            await state.finish()
+        else:
+            keyboard.write(message.text, delay=0.25)
+            await get_screenshot()
+            await message.answer_photo(open("screen_with_mouse.png", "rb"),
+                                       reply_markup=action_mouse_kb)
+            os.remove("screen.png")
+            os.remove("screen_with_mouse.png")
+            await state.finish()
+
+
+@dp.message_handler(state=MouseState.shortcut, content_types=['text'])
+async def cmd_action_shortcut(message: types.Message, state: FSMContext):
+    async with state.proxy() as data:
+        if message.text == 'Выйти из режима':
+            await message.answer('Вы перешли в управление мышью',
+                                 reply_markup=action_mouse_kb)
+            await state.finish()
+        else:
+            keyboard.press(message.text)
+            await get_screenshot()
+            await message.answer_photo(open("screen_with_mouse.png", "rb"),
+                                       reply_markup=action_mouse_kb)
+            os.remove("screen.png")
+            os.remove("screen_with_mouse.png")
+            await state.finish()
 
 
 @dp.message_handler(state=FilesProcessState.action, content_types=['text'])
