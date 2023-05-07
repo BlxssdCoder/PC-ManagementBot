@@ -13,6 +13,7 @@ from loader import dp
 from state.files_process_state import FilesProcessState
 from state.internal_management import ManagementState
 from state.mouse_state import MouseState
+from config import mouse_swipe
 
 from .functions import get_screenshot
 
@@ -25,7 +26,7 @@ class User:
             self.key = None
 
 
-User.curs = 25  # Размах курсора в пикселях
+User.curs = mouse_swipe
 
 
 @dp.message_handler(state=MouseState.action, content_types=['text'])
