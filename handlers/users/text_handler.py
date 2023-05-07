@@ -95,26 +95,26 @@ async def text_handlers(message: types.Message):
                 except:
                     ...
                 text = f"""
-        <b>Информация о компьютере {hostname}</b>
+<b>Информация о компьютере {hostname}</b>
 
-        <b>CPU {cpu_name}</b>
+<b>CPU {cpu_name}</b>
 
-        <b>Загруженность:</b> <code>{load} %</code>
-        <b>Количество потоков:</b> <code>{count_streams}</code>
-        <b>Базовая частота:</b> <code>{base_frequency}</code>
+<b>Загруженность:</b> <code>{load} %</code>
+<b>Количество потоков:</b> <code>{count_streams}</code>
+<b>Базовая частота:</b> <code>{base_frequency}</code>
 
-        <b>Диск</b>
+<b>Диск</b>
 
-        <b>Файловая система:</b> <code>{file_system}</code>
-        <b>Размер:</b> <code>{total_size}</code>
-        <b>Использовано:</b> <code>{used}</code>
-        <b>Свободно:</b> <code>{free}</code>
+<b>Файловая система:</b> <code>{file_system}</code>
+<b>Размер:</b> <code>{total_size}</code>
+<b>Использовано:</b> <code>{used}</code>
+<b>Свободно:</b> <code>{free}</code>
 
-        <b>Оперативная память</b>
+<b>Оперативная память</b>
 
-        <b>Общая память:</b> <code>{total_memory}</code>
-        <b>Доступно памяти:</b> <code>{available_memory}</code>
-        <b>Используется памяти:</b> <code>{used_memory}</code>
-        <b>Загруженность:</b> <code>{memory_load}</code> 
+<b>Общая память:</b> <code>{total_memory}</code>
+<b>Доступно памяти:</b> <code>{available_memory}</code>
+<b>Используется памяти:</b> <code>{used_memory}</code>
+<b>Загруженность:</b> <code>{memory_load}</code> 
         """
                 await message.answer(text, parse_mode='html', reply_markup=kb)

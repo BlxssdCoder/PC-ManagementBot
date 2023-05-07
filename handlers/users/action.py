@@ -91,6 +91,7 @@ async def cmd_action_keyboard(message: types.Message, state: FSMContext):
             await message.answer('Вы перешли в управление мышью',
                                  reply_markup=action_mouse_kb)
             await state.finish()
+            await MouseState.action.set()
         else:
             keyboard.write(message.text, delay=0.25)
             await get_screenshot()
@@ -99,6 +100,7 @@ async def cmd_action_keyboard(message: types.Message, state: FSMContext):
             os.remove("screen.png")
             os.remove("screen_with_mouse.png")
             await state.finish()
+            await MouseState.action.set()
 
 
 @dp.message_handler(state=MouseState.shortcut, content_types=['text'])
@@ -108,6 +110,7 @@ async def cmd_action_shortcut(message: types.Message, state: FSMContext):
             await message.answer('Вы перешли в управление мышью',
                                  reply_markup=action_mouse_kb)
             await state.finish()
+            await MouseState.action.set()
         else:
             keyboard.press(message.text)
             await get_screenshot()
@@ -116,6 +119,7 @@ async def cmd_action_shortcut(message: types.Message, state: FSMContext):
             os.remove("screen.png")
             os.remove("screen_with_mouse.png")
             await state.finish()
+            await MouseState.action.set()
 
 
 @dp.message_handler(state=FilesProcessState.action, content_types=['text'])
